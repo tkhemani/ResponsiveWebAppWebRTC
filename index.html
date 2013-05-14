@@ -14,6 +14,8 @@
                 <h2>WEB RTC Responsive Site </h2>
            
         </div>
+        <button id="full" onclick="fullscr()">Go FullScreen</button>
+        <br>
         To : <input type="text" id="to" name="to" placeholder="Enter To field from check" autofocus required>
            <br>
         Amount : <input type="number" id="amount" min="0" max="1000000" name="Amount" >
@@ -36,6 +38,18 @@
     </div>
          </center> 
     <script>
+
+        function fullscr() {
+            document.getElementById('full').style.visibility = 'hidden'; // hide 
+            var
+         el = document.documentElement
+       , rfs =
+              el.requestFullScreen
+           || el.webkitRequestFullScreen
+           || el.mozRequestFullScreen
+       ;
+       rfs.call(el);
+        }
         // window.scrollTo(0, 1000);
         // Put event listeners into place
         window.addEventListener("DOMContentLoaded", function () {
