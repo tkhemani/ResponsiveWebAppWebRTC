@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link href="style.css" rel="stylesheet" />
+    <title>WebRTC example</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <center>
+    <div id="wrapper">
+        <div id="header">
+            
+                <h2>WEB RTC Responsive Site </h2>
+           
+        </div>
+        To : <input type="text" id="to" name="to" placeholder="Enter To field from check" autofocus required>
+           <br>
+        Amount : <input type="number" id="amount" min="0" max="1000000" name="Amount" >
+        <br>
+         <video title="Place Check in Front of Camera" id="video" autoplay></video>
+        <br>
+                     <button id="snapFront">Snap Front Of Check</button>
+        <br>
+        <canvas class="canvas" id="canvasFront"></canvas>
+        <br>
+        <button id="snapBack">Snap Back Of Check</button>
+        <br>
+        <canvas class="canvas" id="canvasBack"></canvas>
+        <br>
+        <button id="Submit" onclick="showTransactionId()">Submit Check</button>
+        <p>* Please save the check for 7 days</p>
+<p>* You will be notified by email when your deposit is processed</p>
+
+        <p style="display:none" id="transId"><b>The Transaction id for this deposit is : abx1234</b></p>
+    </div>
+         </center> 
+    <script>
+        // window.scrollTo(0, 1000);
+        // Put event listeners into place
+        window.addEventListener("DOMContentLoaded", function () {
+            // Grab elements, create settings, etc.
+            var canvasFront = document.getElementById("canvasFront"),
+ contextFront = canvasFront.getContext("2d"),
+ canvasBack = document.getElementById("canvasBack"),
+ contextBack = canvasBack.getContext("2d"),
+                video = document.getElementById("video"),
+                videoObj = { "video": true },
+                errBack = function (error) {
+                    console.log("Video capture error: ", error.code);
+                };
+
+            // Put video listeners into place
+            if (navigator.getUserMedia) { // Standard
+                navigator.getUserMedia(videoObj, function (stream) {
+                    video.src = stream;
+                    video.play();
+                }, errBack);
+            } else if (navigator.webkitGetUserMedia) { // WebKit-prefixed
+                navigator.webkitGetUserMedia(videoObj, function (stream) {
+                    video.src = window.webkitURL.createObjectURL(stream);
+                    video.play();
+                }, errBack);
+            }
+
+            // Trigger photo take
+            document.getElementById("snapFront").addEventListener("click", function () {
+                contextFront.drawImage(video, 0, 0, 640, 480);
+            });
+            document.getElementById("snapBack").addEventListener("click", function () {
+                contextBack.drawImage(video, 0, 0, 640, 480);
+            });
+
+        }, false);
+
+        function showTransactionId() {
+            document.getElementById('transId').style.display = 'block';
+            alert('The Transaction id for this deposit is : abx1234');
+        }
+    </script>
+</body>
+</html>
