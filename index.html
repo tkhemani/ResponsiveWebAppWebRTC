@@ -5,36 +5,63 @@
     <link href="style.css" rel="stylesheet" />
     <title>WebRTC example</title>
     <meta name="viewport" content="width=device-width">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
 </head>
-<body>
+<body style="background-color:silver;" >
     <center>
     <div id="wrapper">
         <div id="header">
             
-                <h2>WEB RTC Responsive Site </h2>
+                <h2>Check Deposit Portal</h2>
            
         </div>
         To : <input type="text" id="to" name="to" placeholder="Enter To field from check" autofocus required>
            <br>
         Amount : <input type="number" id="amount" min="0" max="1000000" name="Amount" >
+        <p><b><u>Place Check in Front of Camera</b></u></p>
         <br>
-         <video title="Place Check in Front of Camera" id="video" autoplay></video>
         <br>
-                     <button id="snapFront">Snap Front Of Check</button>
+         <video title="Place Check in Front of Camera" id="video" autoplay>Place Check in Front of Camera</video>
         <br>
+        <div>
+
+
+        <div id="FrontDiv">
+                     <button id="snapFront">Capture Front Of Check</button>
+        <br>
+          <br>
+         
         <canvas class="canvas" id="canvasFront"></canvas>
         <br>
-        <button id="snapBack">Snap Back Of Check</button>
+            </div>
+
+          <div id="BackDiv">
+  
+        <button id="snapBack" disabled>Capture Back Of Check</button>
         <br>
+              <br>
         <canvas class="canvas" id="canvasBack"></canvas>
         <br>
-        <button id="Submit" onclick="showTransactionId()">Submit Check</button>
+              </div>
+
+            </div>
+        <br>
+
+
+        <div id="submitDiv">
+             <br>
+             <br>
+        <button id="Submit" disabled onclick="showTransactionId()">Submit Check</button>
+             <br>
+             <br>
         <p>* Please save the check for 7 days</p>
 <p>* You will be notified by email when your deposit is processed</p>
+         </div>
+
 
         <p style="display:none" id="transId"><b>The Transaction id for this deposit is : abx1234</b></p>
     </div>
-         </center> 
+         </center>
     <script>
         // window.scrollTo(0, 1000);
         // Put event listeners into place
@@ -66,17 +93,23 @@
             // Trigger photo take
             document.getElementById("snapFront").addEventListener("click", function () {
                 contextFront.drawImage(video, 0, 0, 640, 480);
+                document.getElementById("snapFront").innerHTML = "Image Captured";
+                document.getElementById("snapBack").disabled = false;
             });
             document.getElementById("snapBack").addEventListener("click", function () {
                 contextBack.drawImage(video, 0, 0, 640, 480);
+                document.getElementById("snapBack").innerHTML = "Image Captured";
+                document.getElementById("Submit").disabled = false;
             });
 
         }, false);
 
         function showTransactionId() {
             document.getElementById('transId').style.display = 'block';
-            alert('The Transaction id for this deposit is : abx1234');
+           // alert('The Transaction id for this deposit is : abx1234');
+            document.getElementById("Submit").innerHTML = "Check Submitted Successfully";
         }
+
     </script>
 </body>
 </html>
